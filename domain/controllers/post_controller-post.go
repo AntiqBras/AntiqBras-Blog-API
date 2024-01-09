@@ -30,12 +30,19 @@ func CreatePost(c *gin.Context) {
 		return
 	}
 
+	writerName, err := GetWriterNameByID(writerID.String())
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
 	post := models.Post{
 		HeroImage: input.HeroImage,
 		Title: input.Title,
 		Subtitle: input.Subtitle,
 		Content: input.Content,
 		Slug: utils.GenerateSlug(input.Title),
+		WriterName: writerName,
 		WriterID: writerID,
 	}
 

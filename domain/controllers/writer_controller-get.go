@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -26,4 +27,15 @@ func GetWriterByUsername(c *gin.Context) {
 
 	w.PrepareGive()
 	c.JSON(http.StatusOK, w)
+}
+
+
+func GetWriterNameByID(id string) (string, error) {
+	var w models.Writer
+
+	if err := domain.DB.Where("id = ?", id).First(&w).Error; err != nil {
+		return "", errors.New("failed to get writer, verify if ID is valid")
+	}
+
+	return w.Author, nil
 }

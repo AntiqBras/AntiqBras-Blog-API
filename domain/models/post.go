@@ -14,6 +14,7 @@ type Post struct {
 	Slug string `gorm:"not null;unique" json:"slug"`
 	Content string `gorm:"not null" json:"content"`
 
+	WriterName string `json:"writer_name"`
 	WriterID uuid.UUID `json:"writer_id"`
 
 	CreatedAt time.Time `json:"created_at"`
